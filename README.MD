@@ -54,7 +54,7 @@ I reccomend to use the VSCode extension **code runner** to do all this stuff by 
 ```
 All this should be placed inside the **settings.json** file from VSCode
 
-## 📞 Support
+## 📞 Support 
 
 For support, you can create an [issue](https://github.com/0tia0/Zodiac-Calculator-V2.0/issues) on this repository, as long as the project is supported
 
