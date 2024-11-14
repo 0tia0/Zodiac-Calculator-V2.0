@@ -20,6 +20,8 @@
 #define bbDarkSelected "./img/theme/dark_selected.jpg"
 #define bbLightUnselected "./img/theme/light_unselected.jpg"
 
+#define intro "./img/background/intro.jpg"
+
 #define textStep 20
 #define defaultTextY 100
 
@@ -286,6 +288,8 @@ bool timeExist(int h, int m)
         return false;
     if (m < 0 || m > 60)
         return false;
+    if (h == 24 && m > 0)
+        return false;
 
     return true;
 }
@@ -527,6 +531,33 @@ int main()
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     setbkcolor(BLACK);
     cleardevice();
+    int size = 0;                                                                                      // Dimensione iniziale
+    int sizeMin = 0;                                                                                   // Dimensione minima
+    int sizeMax = 100;                                                                                  // Dimensione massima
+    int sizeStep = 4;                                                                                   // Incremento/decremento della dimensione
+    bool growing = true;
+    while (!_kbhit())
+    {
+        drawImage(xCenter, yCenter, WINDOW_WIDTH - 100 + size, WINDOW_HEIGHT - 100 + size, intro);                 
+        
+        // Aggiorna la dimensione
+        if (growing)
+        {
+            size += sizeStep;
+            if (size >= sizeMax)
+                growing = false;
+        }
+        else
+        {
+            size -= sizeStep;
+            if (size <= sizeMin)
+                growing = true;
+        }
+
+        delay(10);
+        cleardevice(); 
+    }
+    cleardevice();
 
     chooseTheme();
 
@@ -535,5 +566,4 @@ int main()
     chooseBirtTime();
 
     getch();
-    
 }
