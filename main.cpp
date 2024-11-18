@@ -1,11 +1,31 @@
+/*
+    Zodiac Calculator V2.0                              This code can calculate your zodiac sign
+                                                        cusp and ascendent basing on your born date.
+    Code wrote by Mattia Marelli                        At the end of the execution it return also
+    on 2024 as an homework for school                   an simple description of your sign
+*/
+
+#pragma region lib inclusion
+
+////////////////////
+// LIB INCLUSIONS //
+////////////////////
+
 #include <graphics.h>
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <math.h>
-#include <map>
-#include <string>
+#include <string.h>
+
+#pragma end region
+
+#pragma region definitions
+
+/////////////////
+// DEFINITIONS //
+/////////////////
 
 #define WINDOW_WIDTH 1500
 #define WINDOW_HEIGHT 844
@@ -25,6 +45,10 @@
 #define textStep 20
 #define defaultTextY 100
 
+#pragma end region
+
+#pragma region global variables
+
 //////////////////////
 // GLOBAL VARIABLES //
 //////////////////////
@@ -33,14 +57,18 @@ int themeSelection = 0; // 0 dark 1 light
 
 int currentTextY = defaultTextY;
 
-bool correct = false;
-int input = 0;
-char inputStream[12] = "";
-int inputI = 0;
+bool correct = false;      // is input stream correct
+int input = 0;             // input
+char inputStream[12] = ""; // input stream
+int inputI = 0;            // input index
 
-///////////
-// ENUMS //
-///////////
+#pragma end region
+
+#pragma region enums and arrays
+
+//////////////////////
+// ENUMS AND ARRAYS //
+//////////////////////
 
 enum Keys
 {
@@ -55,6 +83,38 @@ enum dataType
     M_DATE,
     M_TIME
 };
+
+const char *zodiacSignName[]{
+    "CAPRICORNO",
+    "ACQUARIO",
+    "PESCI",
+    "ARIETE",
+    "TORO",
+    "GEMELLI",
+    "CANCRO",
+    "LEONE",
+    "VERGINE",
+    "BILANCIA",
+    "SCORPIONE",
+    "SAGGITTARIO"};
+
+const char *zodiacSignDescription[] = {
+    "Il CAPRICORNO si associa a una persona ambiziosa e pragmatica, che punta sempre in alto.",
+    "L'ACQUARIO si associa a una persona creativa e indipendente, che pensa fuori dagli schemi.",
+    "I PESCI si associano a una persona empatica e sognatrice, che vive tra emozioni profonde.",
+    "L'ARIETE si associa a una persona energica e coraggiosa, che affronta tutto con grinta.",
+    "Il TORO si associa a una persona pragmatica e leale, un vero punto fermo per gli altri.",
+    "I GEMELLI si associano a una persona curiosa e brillante, che ama esplorare nuove idee.",
+    "Il CANCRO si associa a una persona sensibile e protettiva, che si dedica con amore.",
+    "Il LEONE si associa a una persona carismatica e decisa, che brilla come il sole.",
+    "La VERGINE si associa a una persona precisa e analitica, che eccelle nei dettagli.",
+    "La BILANCIA si associa a una persona elegante e diplomatica, che cerca sempre l'armonia.",
+    "Lo SCORPIONE si associa a una persona intensa e misteriosa, che affascina con il suo sguardo.",
+    "Il SAGITTARIO si associa a una persona ottimista e avventurosa, che ama esplorare il mondo."};
+
+#pragma end region
+
+#pragma region structs
 
 /////////////
 // STRUCTs //
@@ -74,6 +134,19 @@ typedef struct
 
     birthTime time;
 } birthDate;
+
+struct zodiacSign
+{
+    char name[50];
+    char description[200];
+    int sign;
+    bool cusp;
+    int ascendent;
+};
+
+#pragma end region
+
+#pragma region text functions
 
 ////////////////////
 // TEXT FUNCTIONs //
@@ -146,6 +219,10 @@ void leaveBlankSpace()
     currentTextY += defaultTextY;
 }
 
+#pragma end region
+
+#pragma region image drawing
+
 ///////////////////
 // IMAGE DRAWING //
 ///////////////////
@@ -156,10 +233,17 @@ void drawImage(int x, int y, int imgWidht, int imgHeight, char *path)
     readimagefile(path, x1, y1, x2, y2);
 }
 
+#pragma end region
+
+#pragma region menus
+
 ///////////
 // MENUS //
 ///////////
 
+/**
+ * @brief this function draws on screen the theme selection menu updating the back color basing on selection
+ */
 void drawThemeMenu()
 {
     switch (themeSelection)
@@ -195,14 +279,79 @@ void drawThemeMenu()
     resetTextY();
 }
 
+/**
+ * @brief display a simple spinning animation
+ *
+ * @param selectedImage based on sign calculation
+ */
+void animatedSign(int selectedImage)
+{
+
+    int i = 0;
+    int j = 0;
+    char *files[] = {
+        "./img/sign/sign_0.jpg",
+        "./img/sign/sign_1.jpg",
+        "./img/sign/sign_2.jpg",
+        "./img/sign/sign_3.jpg",
+        "./img/sign/sign_4.jpg",
+        "./img/sign/sign_5.jpg",
+        "./img/sign/sign_6.jpg",
+        "./img/sign/sign_7.jpg",
+        "./img/sign/sign_8.jpg",
+        "./img/sign/sign_9.jpg",
+        "./img/sign/sign_10.jpg",
+        "./img/sign/sign_11.jpg",
+        "./img/sign/sign_12.jpg",
+    };
+
+    readimagefile("sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    for (j = 0; j < 100; j += 10)
+    {
+        // segno+1 to segno 12
+        for (i = (selectedImage + 1); i <= 12; i++)
+        {
+            readimagefile(files[i], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            delay(j);
+        }
+
+        // segno 1 to segno scelto
+        for (i = 1; i <= selectedImage; i++)
+        {
+            readimagefile(files[i + 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            delay(j);
+        }
+    }
+
+    for (i = 0; i < 5; i++)
+    {
+        readimagefile(files[0], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        delay(50);
+        readimagefile(files[selectedImage], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        delay(100);
+    }
+}
+
+#pragma end region
+
+#pragma region data elaboration functions
+
 ////////////////////////////////
 // DATA ELABORATION FUNCTIONs //
 ////////////////////////////////
 
-bool checkBisestile(int y)
+/**
+ * @brief check if the year in the struct d is bisestile
+ *
+ * @param d the date to check
+ * @return true if bisestile
+ * @return false is !bisestile
+ */
+bool checkBisestile(birthDate d)
 {
     // bisestile se divisibile per 4 ma non per 100 a meno che non lo sia anche per 400
-    if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))
+    if ((d.year % 4 == 0 && d.year % 100 != 0) || (d.year % 400 == 0))
     {
         return true;
     }
@@ -212,26 +361,33 @@ bool checkBisestile(int y)
     }
 }
 
-bool dateExist(int d, int m, int y)
+/**
+ * @brief check if the date exist
+ *
+ * @param d the date to check
+ * @return true if exist
+ * @return false is !exist
+ */
+bool dateExist(birthDate d)
 {
 
     // giorni in ogni mese
     int dayInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     // controllo mese
-    if (m < 1 || m > 12)
+    if (d.month < 1 || d.month > 12)
     {
         return false;
     }
 
     // controllo specifico per febbraio bisestile
-    if (m == 2 && checkBisestile(y))
+    if (d.month == 2 && checkBisestile(d))
     {
         dayInMonth[1] = 29;
     }
 
     // controllo giorno
-    if (d < 1 || d > dayInMonth[m - 1])
+    if (d.day < 1 || d.day > dayInMonth[d.month - 1])
     {
         return false;
     }
@@ -239,7 +395,14 @@ bool dateExist(int d, int m, int y)
     return true;
 }
 
-int fromDateToDays(int day, int month, bool isBisestile)
+/**
+ * @brief convert the date to the days passed since the start of the year, for example if you born on 10/02 we can say that you're born on the 41fs day of the year
+ *
+ * @param d the date to convert
+ * @param isBisestile is the year bisestile?
+ * @return int the total of the days
+ */
+int fromDateToDays(birthDate d, bool isBisestile)
 {
 
     int totalDays = 0;
@@ -247,17 +410,17 @@ int fromDateToDays(int day, int month, bool isBisestile)
     int daysGone[] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
 
     // calcolo giorni
-    if (month == 1)
+    if (d.month == 1)
     {
-        totalDays = day;
+        totalDays = d.day;
     }
     else
     {
-        totalDays = daysGone[month - 1] + day;
+        totalDays = daysGone[d.month - 1] + d.day;
     }
 
     // aggiunti di un giorno se la data e dopo febbraio in un anno bisestile perche febbraio != 28 ma = 29
-    if (month > 2 && isBisestile)
+    if (d.month > 2 && isBisestile)
     {
         totalDays++;
     }
@@ -265,55 +428,164 @@ int fromDateToDays(int day, int month, bool isBisestile)
     return totalDays;
 }
 
-void formatDate(const char *dataStream, int *d, int *m, int *y)
+/**
+ * @brief format the input string in day, month and year
+ *
+ * @param dataStream input string
+ * @param d struct where to save the date
+ */
+void formatDate(const char *dataStream, birthDate *d)
 {
-
-    sscanf(dataStream, "%2d/%2d/%4d", d, m, y);
-
-    // fix 05 -> 5
-    if (*d < 10)
-    {
-        *d = *d % 10;
-    }
-    if (*m < 10)
-    {
-        *m = *m % 10;
-    }
+    sscanf(dataStream, "%2d/%2d/%4d", &d->day, &d->month, &d->year);
 }
 
-bool timeExist(int h, int m)
+/**
+ * @brief check if the time exist
+ *
+ * @param t the time to check
+ * @return true if exist
+ * @return false is !exist
+ */
+bool timeExist(birthTime t)
 {
 
-    if (h < 0 || h > 24)
+    if (t.hour < 0 || t.hour > 24)
         return false;
-    if (m < 0 || m > 60)
+    if (t.minute < 0 || t.minute > 60)
         return false;
-    if (h == 24 && m > 0)
+    if (t.hour == 24 && t.minute > 0)
         return false;
 
     return true;
 }
 
-void formatTime(const char *dataStream, int *h, int *m)
+/**
+ * @brief format the input string in hour and minute
+ *
+ * @param dataStream input string
+ * @param t struct where to save the time
+ */
+void formatTime(const char *dataStream, birthTime *t)
 {
-
-    sscanf(dataStream, "%2d:%2d", h, m);
-
-    // fix 05 -> 5
-    if (*h < 10)
-    {
-        *h = *h % 10;
-    }
-    if (*m < 10)
-    {
-        *m = *m % 10;
-    }
+    sscanf(dataStream, "%2d:%2d", &t->hour, &t->minute);
 }
+
+#pragma end region
+
+#pragma region sign calculation, cusp and ascendent
+
+//////////////////////////////////////////
+// SIGN CALCULATION, CUSP AND ASCENDENT //
+//////////////////////////////////////////
+
+/**
+ * @brief calculate the sign basing on the date
+ *
+ * @param d the date from the user
+ * @param cusp the variable to save if is cusp
+ * @return int corrisponding to the sign
+ */
+int getSign(birthDate d, bool *cusp)
+{
+    bool isBisestile = checkBisestile(d);
+    int totalDays = fromDateToDays(d, isBisestile);
+    int sign = 0;
+
+    int signRange[2][2][13] = {
+        {
+            // NORMALE
+            {1, 20, 50, 110, 140, 141, 172, 204, 236, 266, 297, 326, 356}, // start
+            {19, 49, 79, 139, 140, 171, 203, 235, 265, 296, 325, 355, 365} // end
+        },
+        {
+            // BISESTILE
+            {1, 20, 50, 110, 140, 141, 172, 204, 236, 266, 297, 326, 356}, // start
+            {19, 49, 80, 139, 140, 171, 203, 235, 265, 296, 325, 355, 366} // end
+        }};
+
+    for (int i = 0; i < 13; i++)
+    {
+        if (totalDays >= signRange[isBisestile][0][i] && totalDays <= signRange[isBisestile][1][i])
+        {
+            // Controllo cuspide
+            if (totalDays == signRange[isBisestile][0][i] || totalDays == signRange[isBisestile][1][i])
+            {
+                *cusp = true;
+            }
+
+            // Determinazione del segno
+            sign = (i == 12) ? 1 : i + 1;
+            break;
+        }
+    }
+
+    return sign;
+}
+
+/**
+ * @brief calculate the ascendent basing on the date
+ *
+ * @param d the date from the user
+ * @return int corrisponding to the ascendent
+ */
+int getAscendent(birthDate d)
+{
+    const double romeLat = 41.9028;
+    const double romeLong = 12.4964;
+
+    double decimalHour = d.time.hour + d.time.minute / 60.0;
+    double localHour = decimalHour + (romeLong / 15.0);
+
+    while (localHour < 0)
+        localHour += 24;
+    while (localHour >= 24)
+        localHour -= 24;
+
+    int ascendent = static_cast<int>(localHour / 2);
+    ascendent = (ascendent % 12) + 1;
+
+    ascendent += 3;
+    if (ascendent > 12)
+    {
+        ascendent -= 12;
+    }
+
+    return ascendent;
+}
+
+/**
+ * @brief fill the zodiacSign struct with all the stuffs
+ *
+ * @param d the date inserted
+ * @param t the time inserted
+ * @return zodiacSign struct
+ */
+zodiacSign calculateSign(birthDate d, birthTime t)
+{
+    zodiacSign zS = {0};
+    d.time = t;
+
+    zS.sign = getSign(d, &zS.cusp);
+
+    strcpy(zS.name, zodiacSignName[zS.sign - 1]);
+    strcpy(zS.description, zodiacSignDescription[zS.sign - 1]);
+
+    zS.ascendent = getAscendent(d);
+
+    return zS;
+}
+
+#pragma end region
+
+#pragma region input from screen
 
 ////////////////////////////////
 // GET TEXT INPUT FROM SCREEN //
 ////////////////////////////////
 
+/**
+ * @brief delete a char after a backspace in screen input window
+ */
 void deleteChar()
 {
     setcolor(0);
@@ -331,6 +603,15 @@ void deleteChar()
     printCenteredText(inputStream, COMPLEX_FONT, 4, false);
 }
 
+/**
+ * @brief check if the inserted input is correct
+ *
+ * @param text the input string
+ * @param type the type of date (M_DATE or M_TIME)
+ * @param data the raw data to be converted in data or time struct
+ * @return true if is valid
+ * @return false if is invalid
+ */
 bool checkInput(char *text, int type, void *data)
 {
     birthDate *date = nullptr;
@@ -348,16 +629,22 @@ bool checkInput(char *text, int type, void *data)
     switch (type)
     {
     case M_DATE:
-        formatDate(text, &date->day, &date->month, &date->year);
-        return dateExist(date->day, date->month, date->year);
+        formatDate(text, date);
+        return dateExist(*date);
     case M_TIME:
-        formatTime(text, &time->hour, &time->minute);
-        return timeExist(time->hour, time->minute);
+        formatTime(text, time);
+        return timeExist(*time);
     default:
         break;
     }
 }
 
+/**
+ * @brief automatically ad a seprator if needed
+ *
+ * @param type time or date to choose between / and :
+ * @return true / false
+ */
 bool addSeparator(int type)
 {
     switch (type)
@@ -385,6 +672,12 @@ bool addSeparator(int type)
     return false;
 }
 
+/**
+ * @brief Get input from the screen, check if it is correct and save it
+ *
+ * @param type of the data inserted
+ * @param data where the data should be inserted
+ */
 void getInput(int type, void *data)
 {
     if (themeSelection)
@@ -408,7 +701,7 @@ void getInput(int type, void *data)
     {
         input = getch();
 
-        // ignore ctlr
+        // ignore ctrl
         if (input == 127)
             continue;
 
@@ -467,10 +760,17 @@ void getInput(int type, void *data)
     }
 }
 
+#pragma end region
+
+#pragma region asking to user 
+
 //////////////////////////////
 // ASKING TO USER SOMETHING //
 //////////////////////////////
 
+/**
+ * @brief ask user to choose a theme
+ */
 void chooseTheme()
 {
     bool done = false;
@@ -504,6 +804,11 @@ void chooseTheme()
     }
 }
 
+/**
+ * @brief ask for a date and save it
+ *
+ * @return birthDate to save the data
+ */
 birthDate chooseBirthDate()
 {
     birthDate date;
@@ -513,6 +818,11 @@ birthDate chooseBirthDate()
     return date;
 }
 
+/**
+ * @brief ask for time and save it
+ *
+ * @return birthTime to save the data
+ */
 birthTime chooseBirtTime()
 {
     birthTime time;
@@ -521,6 +831,10 @@ birthTime chooseBirtTime()
     leaveBlankSpace();
     return time;
 }
+
+#pragma end region
+
+#pragma region main
 
 //////////
 // MAIN //
@@ -531,39 +845,53 @@ int main()
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     setbkcolor(BLACK);
     cleardevice();
-    int size = 0;                                                                                      // Dimensione iniziale
-    int sizeMin = 0;                                                                                   // Dimensione minima
-    int sizeMax = 100;                                                                                  // Dimensione massima
-    int sizeStep = 4;                                                                                   // Incremento/decremento della dimensione
-    bool growing = true;
-    while (!_kbhit())
-    {
-        drawImage(xCenter, yCenter, WINDOW_WIDTH - 100 + size, WINDOW_HEIGHT - 100 + size, intro);                 
-        
-        // Aggiorna la dimensione
-        if (growing)
-        {
-            size += sizeStep;
-            if (size >= sizeMax)
-                growing = false;
-        }
-        else
-        {
-            size -= sizeStep;
-            if (size <= sizeMin)
-                growing = true;
-        }
 
-        delay(10);
-        cleardevice(); 
-    }
-    cleardevice();
+    // INTRO SCREEN
+    drawImage(xCenter, yCenter, WINDOW_WIDTH - 100, WINDOW_HEIGHT - 100, intro);
+    delay(3000);
 
+    // CHOOSE SCREEN THEME
     chooseTheme();
 
+    // READ FROM SCREEN
     currentTextY += 150;
-    chooseBirthDate();
-    chooseBirtTime();
+    birthDate date = chooseBirthDate();
+    birthTime time = chooseBirtTime();
 
-    getch();
+    // ZODIAC SIGN CALCULATION CUSP AND ASCENDENT
+    zodiacSign sign = calculateSign(date, time);
+
+    cleardevice();
+
+    animatedSign(sign.sign);
+    delay(2000);
+    cleardevice();
+
+    resetTextY();
+    leaveBlankSpace();
+
+    printCenteredText("il tuo segno zodiacale e\':", BOLD_FONT, 4, false);
+    currentTextY+=50;
+    if (sign.cusp)
+    {
+        strcat(sign.name, " - sei una cuspide");
+        printCenteredText(sign.name, BOLD_FONT, 3, true);
+    }
+    else
+    {
+        printCenteredText(sign.name, BOLD_FONT, 3, true);
+    }
+
+    leaveBlankSpace();
+
+    printCenteredText("il tuo segno ascendnete e\':", BOLD_FONT, 4, false);
+    currentTextY+=50;
+    char *ascendentName;
+    strcpy(ascendentName, zodiacSignName[sign.ascendent]);
+    printCenteredText(ascendentName, BOLD_FONT, 3, true);
+
+    leaveBlankSpace();
+    printCenteredText(sign.description, BOLD_FONT, 3, true);
+
+    delay(20000);
 }
