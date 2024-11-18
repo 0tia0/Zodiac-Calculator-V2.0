@@ -27,16 +27,38 @@ This repository contains the source code for the project **Zodiac Calculator V2.
 
 ## 📸 Pictures
 
-![Coming Soon](https://via.placeholder.com/468x300?text=Waiting+till+the+code+is+finished)
+![intro](/readme-img/2.png)
 
+![theme](/readme-img/3.png)
 
-## 📥 Installation
+![animation](/readme-img/1.png)
+
+## ▶️ User use
+
+### 📥 Installation
+
+To install and try this project you need to:
+
+- Download the most recent [release](https://github.com/0tia0/Zodiac-Calculator-V2.0/releases) of this project.
+- Unzip the content of the downloaded file.
+
+### ⚙️ Run
+
+To run the code of this project you need to:
+
+- execute the file **run.bat**, if needed give the permession for execution
+
+![exe](/readme-img/exe.png)
+
+## 🖥️ Development
+
+### 📥 Installation
 
 You need to install the graphics.h library and its relative libs. All files can be found [here](https://github.com/SagarGaniga/Graphics-Library/) and should be placed in the respective folders: **.h** files in the compiler's **include** folder and **.a** files in the compiler's **lib** folder.
 
 I personally recommend to use [MinGW64](https://www.mingw-w64.org/) as the compiler for this project, and place his **bin** folder inside the windows **System Enviroment Variables** 
 
-## ⚙️ Deployment
+### ⚙️ Deployment
 
 After you have installed and configured the compiler you can run this command in the root folder of this project:
 ```sh
