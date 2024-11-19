@@ -290,7 +290,6 @@ void animatedSign(int selectedImage)
     int i = 0;
     int j = 0;
     char *files[] = {
-        "./img/sign/sign_0.jpg",
         "./img/sign/sign_1.jpg",
         "./img/sign/sign_2.jpg",
         "./img/sign/sign_3.jpg",
@@ -305,30 +304,32 @@ void animatedSign(int selectedImage)
         "./img/sign/sign_12.jpg",
     };
 
-    readimagefile("sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    readimagefile("./img/sign/sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     for (j = 0; j < 100; j += 10)
     {
-        // segno+1 to segno 12
-        for (i = (selectedImage + 1); i <= 12; i++)
+        if (selectedImage < 12)
         {
-            readimagefile(files[i], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-            delay(j);
+            for (int i = selectedImage; i <= 12; i++)
+            {
+                readimagefile(files[i-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                delay(j);
+            }
         }
 
-        // segno 1 to segno scelto
-        for (i = 1; i <= selectedImage; i++)
+        // Secondo ciclo: conta da 1 a 12
+        for (int i = 1; i <= selectedImage; i++)
         {
-            readimagefile(files[i + 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            readimagefile(files[i-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
             delay(j);
         }
     }
 
     for (i = 0; i < 5; i++)
     {
-        readimagefile(files[0], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        readimagefile("./img/sign/sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(50);
-        readimagefile(files[selectedImage], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        readimagefile(files[selectedImage-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(100);
     }
 }
@@ -762,7 +763,7 @@ void getInput(int type, void *data)
 
 #pragma end region
 
-#pragma region asking to user 
+#pragma region asking to user
 
 //////////////////////////////
 // ASKING TO USER SOMETHING //
@@ -871,7 +872,7 @@ int main()
     leaveBlankSpace();
 
     printCenteredText("il tuo segno zodiacale e\':", BOLD_FONT, 4, false);
-    currentTextY+=50;
+    currentTextY += 50;
     if (sign.cusp)
     {
         strcat(sign.name, " - sei una cuspide");
@@ -885,7 +886,7 @@ int main()
     leaveBlankSpace();
 
     printCenteredText("il tuo segno ascendnete e\':", BOLD_FONT, 4, false);
-    currentTextY+=50;
+    currentTextY += 50;
     char *ascendentName;
     strcpy(ascendentName, zodiacSignName[sign.ascendent]);
     printCenteredText(ascendentName, BOLD_FONT, 3, true);
