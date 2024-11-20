@@ -312,7 +312,7 @@ void animatedSign(int selectedImage)
         {
             for (int i = selectedImage; i <= 12; i++)
             {
-                readimagefile(files[i-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                readimagefile(files[i - 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                 delay(j);
             }
         }
@@ -320,7 +320,7 @@ void animatedSign(int selectedImage)
         // Secondo ciclo: conta da 1 a 12
         for (int i = 1; i <= selectedImage; i++)
         {
-            readimagefile(files[i-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+            readimagefile(files[i - 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
             delay(j);
         }
     }
@@ -329,7 +329,7 @@ void animatedSign(int selectedImage)
     {
         readimagefile("./img/sign/sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(50);
-        readimagefile(files[selectedImage-1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        readimagefile(files[selectedImage - 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(100);
     }
 }
@@ -495,13 +495,13 @@ int getSign(birthDate d, bool *cusp)
     int signRange[2][2][13] = {
         {
             // NORMALE
-            {1, 20, 50, 110, 140, 141, 172, 204, 236, 266, 297, 326, 356}, // start
-            {19, 49, 79, 139, 140, 171, 203, 235, 265, 296, 325, 355, 365} // end
+            {1, 20, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356},  // start
+            {19, 49, 79, 109, 139, 170, 201, 232, 262, 292, 321, 355, 365} // end
         },
         {
             // BISESTILE
-            {1, 20, 50, 110, 140, 141, 172, 204, 236, 266, 297, 326, 356}, // start
-            {19, 49, 80, 139, 140, 171, 203, 235, 265, 296, 325, 355, 366} // end
+            {1, 20, 51, 81, 111, 141, 172, 203, 234, 264, 294, 323, 357},  // start
+            {19, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356, 366} // end
         }};
 
     for (int i = 0; i < 13; i++)
