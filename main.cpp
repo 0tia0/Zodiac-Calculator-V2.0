@@ -704,6 +704,11 @@ void getInput(int type, void *data)
         // delete function
         if (input == 8 && inputI > 0)
         {
+            if (inputI == 3 || inputI == 6)
+            {
+                deleteChar();
+            }
+
             deleteChar();
             continue;
         }
