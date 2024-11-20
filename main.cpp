@@ -286,25 +286,20 @@ void drawThemeMenu()
  */
 void animatedSign(int selectedImage)
 {
-
     int i = 0;
     int j = 0;
-    char *files[] = {
-        "./img/sign/sign_1.jpg",
-        "./img/sign/sign_2.jpg",
-        "./img/sign/sign_3.jpg",
-        "./img/sign/sign_4.jpg",
-        "./img/sign/sign_5.jpg",
-        "./img/sign/sign_6.jpg",
-        "./img/sign/sign_7.jpg",
-        "./img/sign/sign_8.jpg",
-        "./img/sign/sign_9.jpg",
-        "./img/sign/sign_10.jpg",
-        "./img/sign/sign_11.jpg",
-        "./img/sign/sign_12.jpg",
-    };
 
-    readimagefile("./img/sign/sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    char files[13][30];
+    char *firstPart = "./img/sign/";
+    for (int i = 1; i <= 12; i++)
+    {
+        sprintf(files[i], "%s%d/sign_%d.jpg", firstPart, themeSelection, i);
+    }
+
+    char noSignImage[30];
+    sprintf(noSignImage, "%s%d/sign_%d.jpg", firstPart, themeSelection, 0);
+
+    readimagefile(noSignImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     for (j = 0; j < 100; j += 10)
     {
@@ -327,7 +322,7 @@ void animatedSign(int selectedImage)
 
     for (i = 0; i < 5; i++)
     {
-        readimagefile("./img/sign/sign_0.jpg", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        readimagefile(noSignImage, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(50);
         readimagefile(files[selectedImage - 1], 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         delay(100);
