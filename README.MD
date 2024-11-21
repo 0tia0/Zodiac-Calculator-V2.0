@@ -4,9 +4,7 @@ This repository contains the source code for the project **Zodiac Calculator V2.
 
 ## 🔰 Badges
 
-![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Calculator-V2.0?style=social) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Calculator-V2.0?style=social)  
-
-![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Calculator-V2.0) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Calculator-V2.0) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Calculator-V2.0)
+![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Calculator-V2.0?style=for-the-badge) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Calculator-V2.0?style=for-the-badge)  ![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Calculator-V2.0?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Calculator-V2.0?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Calculator-V2.0?style=for-the-badge)
 
 ## 👾 Tech Stack
 
